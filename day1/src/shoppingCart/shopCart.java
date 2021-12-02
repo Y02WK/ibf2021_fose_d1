@@ -33,40 +33,45 @@ public class shopCart {
         @param String input
         @return false if cmd is "quit", else returns true
         */
-        Scanner scan = new Scanner(input);
-            String cmd = scan.next();
-            scan.useDelimiter(",");
-
-            switch (cmd.trim().toLowerCase()) {
-                case "list":
-                    this.printItems();
-                    break;
-                case "add":
-                    while (scan.hasNext()) {
-                        String item = scan.next().trim();
-                        this.addToCart(item);
-                    }
-                    break;
-                case "delete":
-                    int index;
-                    try {
-                        index = Integer.parseInt(scan.next().trim()) - 1;
-                    }
-                    catch (Exception e) {
-                        System.out.println("Error. Please enter only numerical inputs for the index.");
-                        break;
-                    }
-                    this.deleteFromCart(index);
-                    break;
-                case "quit":
-                    scan.close();
-                    System.out.println("Bye bye");
-                    return false;
-                default:
-                    System.err.println("Command not found.");
-            }
-            scan.close();
+        if (input.isBlank()) {
+            System.err.println("Input cannot be blank.");
             return true;
+        }
+
+        Scanner scan = new Scanner(input);
+        String cmd = scan.next();
+        scan.useDelimiter(",");
+
+        switch (cmd.trim().toLowerCase()) {
+            case "list":
+                this.printItems();
+                break;
+            case "add":
+                while (scan.hasNext()) {
+                    String item = scan.next().trim();
+                    this.addToCart(item);
+                }
+                break;
+            case "delete":
+                int index;
+                try {
+                    index = Integer.parseInt(scan.next().trim()) - 1;
+                }
+                catch (Exception e) {
+                    System.out.println("Error. Please enter only numerical inputs for the index.");
+                    break;
+                }
+                this.deleteFromCart(index);
+                break;
+            case "quit":
+                scan.close();
+                System.out.println("Bye bye");
+                return false;
+            default:
+                System.err.println("Command not found.");
+        }
+        scan.close();
+        return true;
     }
 
     private String getInput() {
